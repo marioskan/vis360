@@ -7,6 +7,7 @@ namespace VIS360.Core.Entities
 {
     public class Demographic
     {
+        public int ID { get; set; }
         public string City { get; set; }
         public Education Education { get; set; }
         public Gender Gender { get; set; }
@@ -17,5 +18,7 @@ namespace VIS360.Core.Entities
         public List<RoommateRelations> RoommateRelations { get; set; }
         public FinancialStatus FinancialStatus { get; set; }
         public List<Industries> Industries { get; set; }
+
+        public virtual User User { get; set; }
     }
 }

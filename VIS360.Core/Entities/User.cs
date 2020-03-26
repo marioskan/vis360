@@ -9,5 +9,11 @@ namespace VIS360.Core.Entities
         public int ID { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+
+        public virtual UserInfo UserInfo { get; set; }
+        public virtual Demographic Demographic { get; set; }
+        public List<CovidStatus> CovidStatuses { get; set; }
+        public List<DiseaseStatement> DiseaseStatements { get; set; }
+
     }
 }

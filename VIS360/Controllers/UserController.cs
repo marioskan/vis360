@@ -28,7 +28,6 @@ namespace VIS360.Controllers
             {
                 return Content((HttpStatusCode) 600, "Invalid Model");
             }
-
             var user = await _user.GetUserByEmail(modelUser.Email);
             if (user != null)
             {
@@ -40,6 +39,23 @@ namespace VIS360.Controllers
                 return Content((HttpStatusCode)602, "User created");
             }
             return Content((HttpStatusCode)603, "User register failed");
+        }
+
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IHttpActionResult> Login(User userModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Content((HttpStatusCode)600, "Invalid Model");
+            }
+
+            var user = await _user.SearchUser(userModel);
+            if (user == null)
+            {
+                return Content((HttpStatusCode)604, "Wrong credentials or user doesn't exist.");
+            }
+            return Content((HttpStatusCode)605, "User successfully logged in!.!");
         }
     }
 }

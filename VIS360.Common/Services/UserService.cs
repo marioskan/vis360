@@ -32,5 +32,11 @@ namespace VIS360.Common.Services
             var user = await _context.Users.Where(u => u.Email == email).SingleOrDefaultAsync();
             return user;
         }
+
+        public async Task<User> SearchUser(User userModel)
+        {
+            var user = await _context.Users.Where(u => u.Email == userModel.Email && u.Password == userModel.Password).SingleOrDefaultAsync();
+            return user;
+        }
     }
 }

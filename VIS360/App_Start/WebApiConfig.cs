@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using VIS360.App_Start;
 
 namespace VIS360
 {
@@ -19,6 +20,9 @@ namespace VIS360
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            AutofacInitializer.Initialize(config);
         }
+
+        
     }
 }

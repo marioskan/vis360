@@ -38,5 +38,19 @@ namespace VIS360.Common.Services
             var user = await _context.Users.Where(u => u.Email == userModel.Email && u.Password == userModel.Password).SingleOrDefaultAsync();
             return user;
         }
+
+        public async Task<HttpStatusCode> AddUserBasicInfo(UserInfo info)
+        {
+            _context.UserInfos.Add(info);
+            await _context.SaveChangesAsync();
+            return HttpStatusCode.Accepted;
+        }
+
+        public async Task<HttpStatusCode> AddDemographicInfo(Demographic demographic)
+        {
+            _context.Demographics.Add(demographic);
+            await _context.SaveChangesAsync();
+            return HttpStatusCode.Accepted;
+        }
     }
 }

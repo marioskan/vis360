@@ -13,5 +13,7 @@ namespace VIS360.Core.Interfaces
         Task<HttpStatusCode> RegisterUser(User user);
         Task<User> GetUserByEmail(string email);
         Task<User> SearchUser(User userModel);
+        Task<HttpStatusCode> AddUserBasicInfo(UserInfo info);
+        Task<HttpStatusCode> AddDemographicInfo(Demographic demographic);
     }
 }

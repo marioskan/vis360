@@ -57,5 +57,50 @@ namespace VIS360.Controllers
             }
             return Content((HttpStatusCode)605, "User successfully logged in!.!");
         }
+
+        [HttpPost]
+        [Route("BasicInfo")]
+        public async Task<IHttpActionResult> BasicInfo(UserInfo userModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Content((HttpStatusCode)600, "Invalid Model");
+            }
+
+            var user = await _user.GetUserByEmail(userModel.Email);
+            if (user == null)
+            {
+                return Content((HttpStatusCode)607, "No user exists with that email.");
+            }
+            userModel.User = user;
+            var basicinfo = await _user.AddUserBasicInfo(userModel);
+            if (basicinfo == HttpStatusCode.Accepted)
+            {
+                return Content((HttpStatusCode)606, "Added Basic Info.");
+            }
+            return Content((HttpStatusCode)607, "Basic info add failed.");
+        }
+
+        [HttpPost]
+        [Route("Demographic")]
+        public async Task<IHttpActionResult> DemographicInfo(Demographic demographic,string email)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Content((HttpStatusCode)600, "Invalid Model");
+            }
+            var user = await _user.GetUserByEmail(email);
+            if (user == null)
+            {
+                return Content((HttpStatusCode)607, "No user exists with that email.");
+            }
+            demographic.User = user;
+            var demo = await _user.AddDemographicInfo(demographic);
+            if (demo == HttpStatusCode.Accepted)
+            {
+                return Content((HttpStatusCode)606, "Added Demographic Info.");
+            }
+            return Content((HttpStatusCode)607, "Demographic info add failed.");
+        }
     }
 }

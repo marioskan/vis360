@@ -15,6 +15,8 @@ namespace VIS360.Core.Entities
         public bool BloodPressure { get; set; }
         public bool Diabetes { get; set; }
         public bool Smoker { get; set; }
+        public bool Overweight { get; set; }
+
 
         public virtual User User { get; set; }
     }

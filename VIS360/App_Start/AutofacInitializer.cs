@@ -23,6 +23,7 @@ namespace VIS360.App_Start
 
             //Controllers
             builder.RegisterType<UserController>().InstancePerRequest();
+            builder.RegisterType<CovidController>().InstancePerRequest();
 
             IContainer container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);

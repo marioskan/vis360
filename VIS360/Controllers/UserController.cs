@@ -102,5 +102,21 @@ namespace VIS360.Controllers
             }
             return Content((HttpStatusCode)607, "Demographic info add failed.");
         }
+
+        [HttpGet]
+        [Route("UserID")]
+        public async Task<IHttpActionResult> GetUserID(string email)
+        {
+            if (email == null)
+            {
+                return Content((HttpStatusCode)608, "Email cannot be empty");
+            }
+            var user = await _user.GetUserByEmail(email);
+            if (user == null)
+            {
+                return Content((HttpStatusCode)607, "No user exists with that email.");
+            }
+            return Ok(user.ID);
+        }
     }
 }

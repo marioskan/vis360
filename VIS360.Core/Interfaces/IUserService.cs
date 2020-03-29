@@ -18,7 +18,7 @@ namespace VIS360.Core.Interfaces
         Task<HttpStatusCode> AddDemographicInfo(Demographic demographic);
         Task<HttpStatusCode> AddVirusStatus(CovidStatus status);
         Task<HttpStatusCode> AddDiseaseStatement(DiseaseStatement disease);
-        Task<HttpStatusCode> AddHelp(DiseaseStatement disease);
-        Task<HttpStatusCode> AddHelpOffer(DiseaseStatement disease);
+        Task<HttpStatusCode> AddHelp(Help help);
+        Task<HttpStatusCode> AddHelpOffer(HelpOffer helpOffer);
     }
 }

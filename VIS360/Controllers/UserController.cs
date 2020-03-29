@@ -58,6 +58,14 @@ namespace VIS360.Controllers
             return Content((HttpStatusCode)605, "User successfully logged in!.!");
         }
 
+        [HttpGet]
+        [Route("GetUser")]
+        public async Task<IHttpActionResult> GetUser(int id)
+        {
+            var user = await  _user.ReturnUser(id);
+            return Ok(user);
+        }
+
         [HttpPost]
         [Route("BasicInfo")]
         public async Task<IHttpActionResult> BasicInfo(UserInfo userModel)

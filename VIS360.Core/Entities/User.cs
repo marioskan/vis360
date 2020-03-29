@@ -15,5 +15,10 @@ namespace VIS360.Core.Entities
         public List<CovidStatus> CovidStatuses { get; set; }
         public List<DiseaseStatement> DiseaseStatements { get; set; }
 
+        public User()
+        {
+            CovidStatuses = new List<CovidStatus>();
+            DiseaseStatements = new List<DiseaseStatement>();
+        }
     }
 }

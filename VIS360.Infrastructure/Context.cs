@@ -43,13 +43,17 @@ namespace VIS360.Infrastructure
             //User -> CovidStatus 1-*
             modelbuilder.Entity<User>()
                 .HasMany(u => u.CovidStatuses)
-                .WithOptional(c => c.User);
+                .WithRequired(cs => cs.User)
+                .HasForeignKey(cs => cs.UserID)
+                .WillCascadeOnDelete(true);
                 
 
             //User -> DiseaseStatement 1-*
             modelbuilder.Entity<User>()
                 .HasMany(u => u.DiseaseStatements)
-                .WithOptional(d => d.User);
+                .WithRequired(ds => ds.User)
+                .HasForeignKey(ds => ds.UserID)
+                .WillCascadeOnDelete(true);
 
         }
     }

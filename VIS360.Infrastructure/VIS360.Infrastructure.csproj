@@ -62,17 +62,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context.cs" />
-    <Compile Include="Migrations\202003261807025_Initial.cs" />
-    <Compile Include="Migrations\202003261807025_Initial.Designer.cs">
-      <DependentUpon>202003261807025_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202003291701174_initial.cs" />
+    <Compile Include="Migrations\202003291701174_initial.Designer.cs">
+      <DependentUpon>202003291701174_initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202003262049386_dbSetup.cs" />
-    <Compile Include="Migrations\202003262049386_dbSetup.Designer.cs">
-      <DependentUpon>202003262049386_dbSetup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202003291510091_Changes.cs" />
-    <Compile Include="Migrations\202003291510091_Changes.Designer.cs">
-      <DependentUpon>202003291510091_Changes.cs</DependentUpon>
+    <Compile Include="Migrations\202003292026011_initial2.cs" />
+    <Compile Include="Migrations\202003292026011_initial2.Designer.cs">
+      <DependentUpon>202003292026011_initial2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,14 +84,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202003261807025_Initial.resx">
-      <DependentUpon>202003261807025_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003291701174_initial.resx">
+      <DependentUpon>202003291701174_initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003262049386_dbSetup.resx">
-      <DependentUpon>202003262049386_dbSetup.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003291510091_Changes.resx">
-      <DependentUpon>202003291510091_Changes.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003292026011_initial2.resx">
+      <DependentUpon>202003292026011_initial2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -7,13 +7,13 @@ namespace VIS360.Infrastructure.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class dbSetup : IMigrationMetadata
+    public sealed partial class initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(dbSetup));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "202003262049386_dbSetup"; }
+            get { return "202003291701174_initial"; }
         }
         
         string IMigrationMetadata.Source

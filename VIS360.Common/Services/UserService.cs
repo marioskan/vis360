@@ -52,5 +52,44 @@ namespace VIS360.Common.Services
             await _context.SaveChangesAsync();
             return HttpStatusCode.Accepted;
         }
+
+        public async Task<HttpStatusCode> AddVirusStatus(CovidStatus status)
+        {
+            _context.CovidStatuses.Add(status);
+            await _context.SaveChangesAsync();
+            return HttpStatusCode.Accepted;
+        }
+
+        public async Task<User> ReturnUser(int ID)
+        {
+            //var user = await _context.Users.Where(u => u.ID == ID).SingleOrDefaultAsync();
+            var user = await _context.Users.Include(k => k.CovidStatuses)
+                .Include(m => m.DiseaseStatements).Where(u => u.ID == ID)
+                .SingleOrDefaultAsync();
+            //var covidstatuses = await _context.CovidStatuses.Where(u => u.UserID == ID).ToListAsync();
+            //user.CovidStatuses = covidstatuses;
+            return user;
+        }
+
+        public async Task<HttpStatusCode> AddDiseaseStatement(DiseaseStatement disease)
+        {
+           _context.DiseaseStatements.Add(disease);
+           await _context.SaveChangesAsync();
+           return HttpStatusCode.Accepted;
+        }
+
+        public async Task<HttpStatusCode> AddHelp(Help help)
+        {
+            _context.Helps.Add(help);
+            await _context.SaveChangesAsync();
+            return HttpStatusCode.Accepted;
+        }
+
+        public async Task<HttpStatusCode> AddHelpOffer(HelpOffer helpOffer)
+        {
+            _context.HelpOffers.Add(helpOffer);
+            await _context.SaveChangesAsync();
+            return HttpStatusCode.Accepted;
+        }
     }
 }

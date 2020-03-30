@@ -20,6 +20,9 @@ namespace VIS360.Controllers
             _user = user;
         }
 
+        /// <summary>  
+        /// Add covid basic info  (CovidStatus)
+        /// </summary>
         [HttpPost]
         [Route("BasicInfo")]
         public async Task<IHttpActionResult> BasicInfo(CovidStatus status)
@@ -37,6 +40,9 @@ namespace VIS360.Controllers
             return Content((HttpStatusCode)606, "Covid Status add failed");
         }
 
+        /// <summary>  
+        /// Add disease statement  (DiseaseStatement)
+        /// </summary>
         [HttpPost]
         [Route("Statement")]
         public async Task<IHttpActionResult> DiseaseStatement(DiseaseStatement diseaseStatement)

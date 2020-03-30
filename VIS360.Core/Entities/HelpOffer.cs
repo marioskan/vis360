@@ -9,6 +9,7 @@ namespace VIS360.Core.Entities
     public class HelpOffer
     {
         public int ID { get; set; }
+        public int UserID { get; set; }
         public HelpType HelpType { get; set; }
     }
 }

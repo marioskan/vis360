@@ -20,6 +20,9 @@ namespace VIS360.Controllers
             _user = user;
         }
 
+        /// <summary>  
+        /// Add help  (Help)
+        /// </summary>
         [HttpPost]
         [Route("Need")]
         public async Task<IHttpActionResult> AddHelp(Help help)
@@ -37,6 +40,9 @@ namespace VIS360.Controllers
             return Content((HttpStatusCode)606, "Help add failed");
         }
 
+        /// <summary>  
+        /// Add help offer (HelpOffer)
+        /// </summary> 
         [HttpPost]
         [Route("Offer")]
         public async Task<IHttpActionResult> AddHelpOffer(HelpOffer helpOffer)

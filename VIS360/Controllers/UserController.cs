@@ -20,6 +20,9 @@ namespace VIS360.Controllers
             _user = user;
         }
 
+        /// <summary>  
+        /// Register User  (User)
+        /// </summary>
         [HttpPost]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(User modelUser)
@@ -41,6 +44,9 @@ namespace VIS360.Controllers
             return Content((HttpStatusCode)603, "User register failed");
         }
 
+        /// <summary>  
+        /// Check user credentials Login  (User)
+        /// </summary>
         [HttpPost]
         [Route("Login")]
         public async Task<IHttpActionResult> Login(User userModel)
@@ -58,6 +64,9 @@ namespace VIS360.Controllers
             return Content((HttpStatusCode)605, "User successfully logged in!.!");
         }
 
+        /// <summary>  
+        /// Returns user object based on ID (int id)
+        /// </summary>
         [HttpGet]
         [Route("GetUser")]
         public async Task<IHttpActionResult> GetUser(int id)
@@ -66,6 +75,9 @@ namespace VIS360.Controllers
             return Ok(user);
         }
 
+        /// <summary>  
+        /// Add basic info  (UserInfo)
+        /// </summary>
         [HttpPost]
         [Route("BasicInfo")]
         public async Task<IHttpActionResult> BasicInfo(UserInfo userModel)
@@ -89,6 +101,9 @@ namespace VIS360.Controllers
             return Content((HttpStatusCode)607, "Basic info add failed.");
         }
 
+        /// <summary>  
+        /// Add demographic info  (Demographic, string email)
+        /// </summary>
         [HttpPost]
         [Route("Demographic")]
         public async Task<IHttpActionResult> DemographicInfo(Demographic demographic,string email)
@@ -111,6 +126,9 @@ namespace VIS360.Controllers
             return Content((HttpStatusCode)607, "Demographic info add failed.");
         }
 
+        /// <summary>  
+        /// Returns user id only base on email  (string email)
+        /// </summary>
         [HttpGet]
         [Route("UserID")]
         public async Task<IHttpActionResult> GetUserID(string email)

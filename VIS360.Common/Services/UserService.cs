@@ -95,5 +95,12 @@ namespace VIS360.Common.Services
             await _context.SaveChangesAsync();
             return HttpStatusCode.Accepted;
         }
+
+        public async Task<HttpStatusCode> AddOtherMember(OtherMember member)
+        {
+            _context.OtherMembers.Add(member);
+            await _context.SaveChangesAsync();
+            return HttpStatusCode.Accepted;
+        }
     }
 }

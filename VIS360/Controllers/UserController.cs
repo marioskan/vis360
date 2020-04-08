@@ -127,6 +127,22 @@ namespace VIS360.Controllers
         }
 
         [HttpPost]
+        [Route("AddOtherMember")]
+        public async Task<IHttpActionResult> AddOtherMember(OtherMember member)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Content((HttpStatusCode)202, "Invalid Model");
+            }
+            var result = await _user.AddOtherMember(member);
+            if (result == HttpStatusCode.Accepted)
+            {
+                return Content((HttpStatusCode)209, "No user exists with that id.");
+            }
+            return Content((HttpStatusCode)211, "Member add failed.");
+        }
+
+        [HttpPost]
         [Route("DemographicWithID")]
         public async Task<IHttpActionResult> DemographicInfoWithID(Demographic demographic, int ID)
         {

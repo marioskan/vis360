@@ -20,5 +20,6 @@ namespace VIS360.Core.Interfaces
         Task<HttpStatusCode> AddDiseaseStatement(DiseaseStatement disease);
         Task<HttpStatusCode> AddHelp(Help help);
         Task<HttpStatusCode> AddHelpOffer(HelpOffer helpOffer);
+        Task<HttpStatusCode> AddOtherMember(OtherMember member);
     }
 }

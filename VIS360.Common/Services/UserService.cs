@@ -78,7 +78,10 @@ namespace VIS360.Common.Services
             var user = await _context.Users.Include(k => k.CovidStatuses)
                 .Include(k=> k.Demographic.RoomateRelations)
                 .Include(k => k.Demographic.Industries)
-                .Include(m => m.DiseaseStatements).Where(u => u.ID == ID)
+                .Include(k => k.OtherMembers)
+                .Include(k => k.CovidStatuses)
+                .Include(k => k.UserInfo)
+                .Include(m => m.DiseaseStatements).Where(u =>u.ID == ID)
                 .SingleOrDefaultAsync();
             //var covidstatuses = await _context.CovidStatuses.Where(u => u.UserID == ID).ToListAsync();
             //user.CovidStatuses = covidstatuses;

@@ -27,6 +27,11 @@ namespace VIS360.Infrastructure
         public DbSet<DiseaseStatement> DiseaseStatements { get; set; }
         public DbSet<Help> Helps { get; set; }
         public DbSet<HelpOffer> HelpOffers { get; set; }
+        public DbSet<RoomateRelation> RoomateRelations { get; set; }
+        public DbSet<Industry> Industries { get; set; }
+        public DbSet<OtherMember> OtherMembers { get; set; }
+        public DbSet<HeartDisease> HeartDiseases { get; set; }
+        public DbSet<BreathingDiseases> BreathingDiseaseses { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelbuilder)
         {
@@ -55,6 +60,50 @@ namespace VIS360.Infrastructure
                 .HasForeignKey(ds => ds.UserID)
                 .WillCascadeOnDelete(true);
 
+            //User -> OtherMembers 1-*
+            modelbuilder.Entity<User>()
+                .HasMany(u => u.OtherMembers)
+                .WithRequired(o => o.User)
+                .HasForeignKey(o => o.UserID)
+                .WillCascadeOnDelete(true);
+
+            //Demographic -> RoomateRelations 1-*       
+            modelbuilder.Entity<Demographic>()
+                .HasMany(d => d.RoomateRelations)
+                .WithRequired(r => r.Demographic)
+                .HasForeignKey(r => r.DemographicID)
+                .WillCascadeOnDelete(true);
+
+            //Demographic -> Industries 1-*       
+            modelbuilder.Entity<Demographic>()
+                .HasMany(d => d.Industries)
+                .WithRequired(i => i.Demographic)
+                .HasForeignKey(i =>  i.DemographicID)
+                .WillCascadeOnDelete(true);
+
+            //CovidStatus -> OtherMember 1-1
+            modelbuilder.Entity<CovidStatus>()
+                .HasOptional(c => c.OtherMember)
+                .WithRequired(o => o.CovidStatus);
+
+            //CovidStatus -> HeartDiseases 1-*
+            modelbuilder.Entity<CovidStatus>()
+                .HasMany(c => c.HeartDiseases)
+                .WithRequired(h => h.CovidStatus)
+                .HasForeignKey(h => h.CovidStatusID)
+                .WillCascadeOnDelete(true);
+
+            //CovidStatus -> BreathingDiseases 1-*    
+            modelbuilder.Entity<CovidStatus>()
+                .HasMany(c => c.BreathingDiseases)
+                .WithRequired(b => b.CovidStatus)
+                .HasForeignKey(b => b.CovidStatusID)
+                .WillCascadeOnDelete(true);
+
+            //DiseaseStatement -> OtherMember 1-1
+            modelbuilder.Entity<DiseaseStatement>()
+                .HasOptional(d => d.OtherMember)
+                .WithRequired(o => o.DiseaseStatement);
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace VIS360.Core.Enumerations
 {
-    public enum HeartDisease
+    public enum HeartDiseaseEnum
     {
         Arrhythmia = 10,
         StenosisBlockage = 15,

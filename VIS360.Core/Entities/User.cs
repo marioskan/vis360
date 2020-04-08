@@ -14,11 +14,13 @@ namespace VIS360.Core.Entities
         public virtual Demographic Demographic { get; set; }
         public List<CovidStatus> CovidStatuses { get; set; }
         public List<DiseaseStatement> DiseaseStatements { get; set; }
+        public List<OtherMember> OtherMembers { get; set; }
 
         public User()
         {
             CovidStatuses = new List<CovidStatus>();
             DiseaseStatements = new List<DiseaseStatement>();
+            OtherMembers = new List<OtherMember>();
         }
     }
 }

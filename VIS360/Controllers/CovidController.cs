@@ -35,7 +35,7 @@ namespace VIS360.Controllers
             var covidStatus = await _user.AddVirusStatus(status);
             if (covidStatus == HttpStatusCode.Accepted)
             {
-                return Content((HttpStatusCode)608, "Added Covid Status");
+                return Content((HttpStatusCode)608, "Added Covid Status successfully");
             }
             return Content((HttpStatusCode)606, "Covid Status add failed");
         }
@@ -55,7 +55,7 @@ namespace VIS360.Controllers
             var disease = await _user.AddDiseaseStatement(diseaseStatement);
             if (disease == HttpStatusCode.Accepted)
             {
-                return Content((HttpStatusCode)608, "Added Disease Statement");
+                return Content((HttpStatusCode)608, "Added Disease Statement successfully");
             }
             return Content((HttpStatusCode)606, "Disease Statement add failed");
         }

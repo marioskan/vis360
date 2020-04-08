@@ -29,19 +29,19 @@ namespace VIS360.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Content((HttpStatusCode) 600, "Invalid Model");
+                return Content((HttpStatusCode)202, "Invalid Model");
             }
             var user = await _user.GetUserByEmail(modelUser.Email);
             if (user != null)
             {
-                return Content((HttpStatusCode)601, "User already exists");
+                return Content((HttpStatusCode)201, "User already exists");
             }           
             var result = await _user.RegisterUser(modelUser);
             if (result == HttpStatusCode.Accepted)
             {
-                return Content((HttpStatusCode)602, "User created");
+                return Content((HttpStatusCode)200, "User created successfully");
             }
-            return Content((HttpStatusCode)603, "User register failed");
+            return Content((HttpStatusCode)203, "User register failed");
         }
 
         /// <summary>  
@@ -53,15 +53,15 @@ namespace VIS360.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Content((HttpStatusCode)600, "Invalid Model");
+                return Content((HttpStatusCode)202, "Invalid Model");
             }
 
             var user = await _user.SearchUser(userModel);
             if (user == null)
             {
-                return Content((HttpStatusCode)604, "Wrong credentials or user doesn't exist.");
+                return Content((HttpStatusCode)202, "Wrong credentials or user doesn't exist.");
             }
-            return Content((HttpStatusCode)605, "User successfully logged in!.!");
+            return Content((HttpStatusCode)205, "User successfully logged in!");
         }
 
         /// <summary>  
@@ -84,21 +84,21 @@ namespace VIS360.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Content((HttpStatusCode)600, "Invalid Model");
+                return Content((HttpStatusCode)202, "Invalid Model");
             }
 
             var user = await _user.GetUserByEmail(userModel.Email);
             if (user == null)
             {
-                return Content((HttpStatusCode)607, "No user exists with that email.");
+                return Content((HttpStatusCode)206, "No user exists with that email.");
             }
             userModel.User = user;
             var basicinfo = await _user.AddUserBasicInfo(userModel);
             if (basicinfo == HttpStatusCode.Accepted)
             {
-                return Content((HttpStatusCode)606, "Added Basic Info.");
+                return Content((HttpStatusCode)207, "Added Basic Info successfully.");
             }
-            return Content((HttpStatusCode)607, "Basic info add failed.");
+            return Content((HttpStatusCode)208, "Basic info add failed.");
         }
 
         /// <summary>  
@@ -110,20 +110,43 @@ namespace VIS360.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Content((HttpStatusCode)600, "Invalid Model");
+                return Content((HttpStatusCode)202, "Invalid Model");
             }
             var user = await _user.GetUserByEmail(email);
             if (user == null)
             {
-                return Content((HttpStatusCode)607, "No user exists with that email.");
+                return Content((HttpStatusCode)209, "No user exists with that email.");
             }
             demographic.User = user;
             var demo = await _user.AddDemographicInfo(demographic);
             if (demo == HttpStatusCode.Accepted)
             {
-                return Content((HttpStatusCode)606, "Added Demographic Info.");
+                return Content((HttpStatusCode)210, "Added Demographic Info successfully.");
             }
-            return Content((HttpStatusCode)607, "Demographic info add failed.");
+            return Content((HttpStatusCode)211, "Demographic info add failed.");
+        }
+
+        [HttpPost]
+        [Route("DemographicWithID")]
+        public async Task<IHttpActionResult> DemographicInfoWithID(Demographic demographic, int ID)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Content((HttpStatusCode)202, "Invalid Model");
+            }
+
+            var user = await _user.ReturnUser(ID);
+            if (user == null)
+            {
+                return Content((HttpStatusCode)212, "No user exists with that email.");
+            }
+            demographic.User = user;
+            var demo = await _user.AddDemographicInfo(demographic);
+            if (demo == HttpStatusCode.Accepted)
+            {
+                return Content((HttpStatusCode)213, "Added Demographic Info successfully.");
+            }
+            return Content((HttpStatusCode)214, "Demographic info add failed.");
         }
 
         /// <summary>  
@@ -135,12 +158,12 @@ namespace VIS360.Controllers
         {
             if (email == null)
             {
-                return Content((HttpStatusCode)608, "Email cannot be empty");
+                return Content((HttpStatusCode)202, "Email cannot be empty");
             }
             var user = await _user.GetUserByEmail(email);
             if (user == null)
             {
-                return Content((HttpStatusCode)607, "No user exists with that email.");
+                return Content((HttpStatusCode)214, "No user exists with that email.");
             }
             return Ok(user.ID);
         }

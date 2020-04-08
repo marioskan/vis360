@@ -48,6 +48,10 @@ namespace VIS360.Common.Services
 
         public async Task<HttpStatusCode> AddDemographicInfo(Demographic demographic)
         {
+            foreach (var roomRel in demographic.RoomateRelations)
+            {
+                
+            }
             _context.Demographics.Add(demographic);
             await _context.SaveChangesAsync();
             return HttpStatusCode.Accepted;

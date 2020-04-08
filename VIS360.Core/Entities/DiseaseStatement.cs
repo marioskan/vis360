@@ -5,12 +5,11 @@ using VIS360.Core.Enumerations;
 
 namespace VIS360.Core.Entities
 {
-    public class DiseaseStatement : OtherMember
+    public class DiseaseStatement 
     {
         public int ID { get; set; }
         public int UserID { get; set; }
-        public CovidMember CovidMember { get; set; }
-        public string Name { get; set; }
+
         public bool Coronavirus { get; set; }
         public Diagnose Diagnose { get; set; }
         public DateTime DiagnoseDate { get; set; }
@@ -18,5 +17,6 @@ namespace VIS360.Core.Entities
         public string HospitalName { get; set; }
 
         public virtual User User { get; set; }
+        public virtual OtherMember OtherMember { get; set; }
     }
 }

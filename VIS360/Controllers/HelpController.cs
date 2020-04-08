@@ -35,7 +35,7 @@ namespace VIS360.Controllers
             var _help = await _user.AddHelp(help);
             if (_help == HttpStatusCode.Accepted)
             {
-                return Content((HttpStatusCode)608, "Added Help");
+                return Content((HttpStatusCode)608, "Added Help successfully");
             }
             return Content((HttpStatusCode)606, "Help add failed");
         }
@@ -55,7 +55,7 @@ namespace VIS360.Controllers
             var _help = await _user.AddHelpOffer(helpOffer);
             if (_help == HttpStatusCode.Accepted)
             {
-                return Content((HttpStatusCode)608, "Added Help offer");
+                return Content((HttpStatusCode)608, "Added Help offer successfully");
             }
             return Content((HttpStatusCode)606, "Help offer add failed");
         }

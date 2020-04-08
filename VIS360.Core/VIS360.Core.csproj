@@ -61,22 +61,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\BreathingDiseases.cs" />
     <Compile Include="Entities\CovidStatus.cs" />
     <Compile Include="Entities\Demographic.cs" />
     <Compile Include="Entities\DiseaseStatement.cs" />
+    <Compile Include="Entities\HeartDisease.cs" />
     <Compile Include="Entities\Help.cs" />
     <Compile Include="Entities\HelpOffer.cs" />
+    <Compile Include="Entities\Industry.cs" />
     <Compile Include="Entities\OtherMember.cs" />
+    <Compile Include="Entities\RoomateRelation.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserInfo.cs" />
-    <Compile Include="Enumerations\BreathingDiseases.cs" />
+    <Compile Include="Enumerations\BreathingDiseasesEnum.cs" />
     <Compile Include="Enumerations\CovidMember.cs" />
     <Compile Include="Enumerations\Diagnose.cs" />
     <Compile Include="Enumerations\Education.cs" />
     <Compile Include="Enumerations\FamilyStatus.cs" />
     <Compile Include="Enumerations\FinancialStatus.cs" />
     <Compile Include="Enumerations\Gender.cs" />
-    <Compile Include="Enumerations\HeartDisease.cs" />
+    <Compile Include="Enumerations\HeartDiseaseEnum.cs" />
     <Compile Include="Enumerations\HelpType.cs" />
     <Compile Include="Enumerations\Industries.cs" />
     <Compile Include="Enumerations\RoommateRelations.cs" />

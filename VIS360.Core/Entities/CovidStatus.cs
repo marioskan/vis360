@@ -10,6 +10,7 @@ namespace VIS360.Core.Entities
     {
         public int ID { get; set; }
         public int UserID { get; set; }
+        public int OtherMemberID { get; set; }
         public bool BloodPressure { get; set; }
         public bool Diabetes { get; set; }
         public bool Smoker { get; set; }

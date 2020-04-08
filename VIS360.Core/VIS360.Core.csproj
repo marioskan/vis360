@@ -87,6 +87,7 @@
     <Compile Include="Enumerations\Work.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\DemographicIndustryRoomateVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

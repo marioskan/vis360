@@ -51,7 +51,7 @@ namespace VIS360.Infrastructure
                 .WithRequired(cs => cs.User)
                 .HasForeignKey(cs => cs.UserID)
                 .WillCascadeOnDelete(true);
-                
+
 
             //User -> DiseaseStatement 1-*
             modelbuilder.Entity<User>()
@@ -81,10 +81,10 @@ namespace VIS360.Infrastructure
                 .HasForeignKey(i =>  i.DemographicID)
                 .WillCascadeOnDelete(true);
 
-            //CovidStatus -> OtherMember 1-1
-            modelbuilder.Entity<CovidStatus>()
-                .HasOptional(c => c.OtherMember)
-                .WithRequired(o => o.CovidStatus);
+            ////CovidStatus -> OtherMember 1-1
+            //modelbuilder.Entity<CovidStatus>()
+            //    .HasOptional(c => c.OtherMember)
+            //    .WithRequired(o => o.CovidStatus);
 
             //CovidStatus -> HeartDiseases 1-*
             modelbuilder.Entity<CovidStatus>()
@@ -100,10 +100,24 @@ namespace VIS360.Infrastructure
                 .HasForeignKey(b => b.CovidStatusID)
                 .WillCascadeOnDelete(true);
 
-            //DiseaseStatement -> OtherMember 1-1
-            modelbuilder.Entity<DiseaseStatement>()
-                .HasOptional(d => d.OtherMember)
-                .WithRequired(o => o.DiseaseStatement);
+            ////DiseaseStatement -> OtherMember 1-1
+            //modelbuilder.Entity<DiseaseStatement>()
+            //    .HasOptional(d => d.OtherMember)
+            //    .WithRequired(o => o.DiseaseStatement);
+
+            //OtheMember -> DiseaseStatement 1 - *
+            modelbuilder.Entity<OtherMember>()
+                .HasMany(o => o.DiseaseStatements)
+                .WithRequired(d => d.OtherMember)
+                .HasForeignKey(d => d.OtherMemberID)
+                .WillCascadeOnDelete(false);
+
+            //OtheMember -> CovidStatus 1 - *
+            modelbuilder.Entity<OtherMember>()
+                .HasMany(o => o.CovidStatuses)
+                .WithRequired(c => c.OtherMember)
+                .HasForeignKey(c => c.OtherMemberID)
+                .WillCascadeOnDelete(false);
         }
     }
 }

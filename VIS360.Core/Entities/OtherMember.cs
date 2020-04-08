@@ -16,7 +16,7 @@ namespace VIS360.Core.Entities
         public int PeopleLivingWith { get; set; }
 
         public virtual User User { get; set; }
-        public virtual CovidStatus CovidStatus { get; set; }
-        public virtual DiseaseStatement DiseaseStatement { get; set; }
+        public virtual List<CovidStatus> CovidStatuses { get; set; }
+        public virtual List<DiseaseStatement> DiseaseStatements { get; set; }
     }
 }

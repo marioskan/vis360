@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VIS360.Core.Entities;
 using VIS360.Core.Interfaces;
+using VIS360.Core.ViewModels;
 using VIS360.Infrastructure;
 
 namespace VIS360.Common.Services
@@ -46,15 +47,22 @@ namespace VIS360.Common.Services
             return HttpStatusCode.Accepted;
         }
 
-        public async Task<HttpStatusCode> AddDemographicInfo(Demographic demographic)
+        public async Task<Demographic> AddDemographicInfo(DemographicIndustryRoomateVM demographic)
         {
-            foreach (var roomRel in demographic.RoomateRelations)
-            {
-                
-            }
-            _context.Demographics.Add(demographic);
+            var demo = new Demographic();
+            demo.User = demographic.User;
+            demo.City = demographic.City;
+            demo.Country = demographic.Country;
+            demo.Gender = demographic.Gender;
+            demo.Age = demographic.Age;
+            demo.FamilyStatus = demographic.FamilyStatus;
+            demo.Work = demographic.Work;
+            demo.Roommates = demographic.Roommates;
+            demo.FinancialStatus = demographic.FinancialStatus;
+            _context.Demographics.Add(demo);
+            await _context.SaveChangesAsync();            
             await _context.SaveChangesAsync();
-            return HttpStatusCode.Accepted;
+            return demo;
         }
 
         public async Task<HttpStatusCode> AddVirusStatus(CovidStatus status)
@@ -68,6 +76,8 @@ namespace VIS360.Common.Services
         {
             //var user = await _context.Users.Where(u => u.ID == ID).SingleOrDefaultAsync();
             var user = await _context.Users.Include(k => k.CovidStatuses)
+                .Include(k=> k.Demographic.RoomateRelations)
+                .Include(k => k.Demographic.Industries)
                 .Include(m => m.DiseaseStatements).Where(u => u.ID == ID)
                 .SingleOrDefaultAsync();
             //var covidstatuses = await _context.CovidStatuses.Where(u => u.UserID == ID).ToListAsync();
@@ -101,6 +111,28 @@ namespace VIS360.Common.Services
             _context.OtherMembers.Add(member);
             await _context.SaveChangesAsync();
             return HttpStatusCode.Accepted;
+        }
+
+        public async Task<HttpStatusCode> AddRelInd(List<RoomateRelation> relations, List<Industry> industries,Demographic demographic)
+        {
+            foreach (var rel in relations)
+            {
+                rel.DemographicID = demographic.ID;
+                _context.RoomateRelations.Add(rel);
+            }
+            foreach (var ind in industries)
+            {
+                ind.DemographicID = demographic.ID;
+                _context.Industries.Add(ind);
+            }
+            await _context.SaveChangesAsync();
+            return HttpStatusCode.Accepted;
+        }
+
+        public async Task<Demographic> ReturnDemo(User user)
+        {
+            var demo = await _context.Demographics.Where(u => u.User == user).SingleOrDefaultAsync();
+            return demo;
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using VIS360.Core.Entities;
 using VIS360.Core.Interfaces;
+using VIS360.Core.ViewModels;
 
 namespace VIS360.Controllers
 {
@@ -104,27 +105,27 @@ namespace VIS360.Controllers
         /// <summary>  
         /// Add demographic info  (Demographic, string email)
         /// </summary>
-        [HttpPost]
-        [Route("Demographic")]
-        public async Task<IHttpActionResult> DemographicInfo(Demographic demographic,string email)
-        {
-            if (!ModelState.IsValid)
-            {
-                return Content((HttpStatusCode)202, "Invalid Model");
-            }
-            var user = await _user.GetUserByEmail(email);
-            if (user == null)
-            {
-                return Content((HttpStatusCode)209, "No user exists with that email.");
-            }
-            demographic.User = user;
-            var demo = await _user.AddDemographicInfo(demographic);
-            if (demo == HttpStatusCode.Accepted)
-            {
-                return Content((HttpStatusCode)210, "Added Demographic Info successfully.");
-            }
-            return Content((HttpStatusCode)211, "Demographic info add failed.");
-        }
+        //[HttpPost]
+        //[Route("DONOTUSE")]
+        //public async Task<IHttpActionResult> DemographicInfo(Demographic demographic,string email)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return Content((HttpStatusCode)202, "Invalid Model");
+        //    }
+        //    var user = await _user.GetUserByEmail(email);
+        //    if (user == null)
+        //    {
+        //        return Content((HttpStatusCode)209, "No user exists with that email.");
+        //    }
+        //    demographic.User = user;
+        //    var demo = await _user.AddDemographicInfo(demographic);
+        //    if (demo == HttpStatusCode.Accepted)
+        //    {
+        //        return Content((HttpStatusCode)210, "Added Demographic Info successfully.");
+        //    }
+        //    return Content((HttpStatusCode)211, "Demographic info add failed.");
+        //}
 
         [HttpPost]
         [Route("AddOtherMember")]
@@ -137,20 +138,19 @@ namespace VIS360.Controllers
             var result = await _user.AddOtherMember(member);
             if (result == HttpStatusCode.Accepted)
             {
-                return Content((HttpStatusCode)209, "No user exists with that id.");
+                return Content((HttpStatusCode)209, "successfully");
             }
             return Content((HttpStatusCode)211, "Member add failed.");
         }
 
         [HttpPost]
         [Route("DemographicWithID")]
-        public async Task<IHttpActionResult> DemographicInfoWithID(Demographic demographic, int ID)
+        public async Task<IHttpActionResult> DemographicInfoWithID(DemographicIndustryRoomateVM demographic, int ID)
         {
             if (!ModelState.IsValid)
             {
                 return Content((HttpStatusCode)202, "Invalid Model");
             }
-
             var user = await _user.ReturnUser(ID);
             if (user == null)
             {
@@ -158,7 +158,9 @@ namespace VIS360.Controllers
             }
             demographic.User = user;
             var demo = await _user.AddDemographicInfo(demographic);
-            if (demo == HttpStatusCode.Accepted)
+            //var returned = await _user.ReturnDemo(user);
+            var demoMore = await _user.AddRelInd(demographic.RoomateRelations, demographic.Industries,demo);
+            if (demoMore == HttpStatusCode.Accepted)
             {
                 return Content((HttpStatusCode)213, "Added Demographic Info successfully.");
             }

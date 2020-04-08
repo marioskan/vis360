@@ -521,7 +521,7 @@
             Add basic info  (UserInfo)
             </summary>
         </member>
-        <member name="M:VIS360.Controllers.UserController.DemographicInfo(VIS360.Core.Entities.Demographic,System.String)">
+        <member name="M:VIS360.Controllers.UserController.AddOtherMember(VIS360.Core.Entities.OtherMember)">
             <summary>  
             Add demographic info  (Demographic, string email)
             </summary>

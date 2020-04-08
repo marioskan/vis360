@@ -13,7 +13,7 @@ namespace VIS360.Infrastructure.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202003291701174_initial"; }
+            get { return "202004081606332_initial"; }
         }
         
         string IMigrationMetadata.Source

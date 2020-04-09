@@ -48,7 +48,7 @@ namespace VIS360.Infrastructure
             //User -> CovidStatus 1-*
             modelbuilder.Entity<User>()
                 .HasMany(u => u.CovidStatuses)
-                .WithRequired(cs => cs.User)
+                .WithOptional(cs => cs.User)
                 .HasForeignKey(cs => cs.UserID)
                 .WillCascadeOnDelete(true);
 
@@ -56,7 +56,7 @@ namespace VIS360.Infrastructure
             //User -> DiseaseStatement 1-*
             modelbuilder.Entity<User>()
                 .HasMany(u => u.DiseaseStatements)
-                .WithRequired(ds => ds.User)
+                .WithOptional(ds => ds.User)
                 .HasForeignKey(ds => ds.UserID)
                 .WillCascadeOnDelete(true);
 
@@ -108,14 +108,14 @@ namespace VIS360.Infrastructure
             //OtheMember -> DiseaseStatement 1 - *
             modelbuilder.Entity<OtherMember>()
                 .HasMany(o => o.DiseaseStatements)
-                .WithRequired(d => d.OtherMember)
+                .WithOptional(d => d.OtherMember)
                 .HasForeignKey(d => d.OtherMemberID)
                 .WillCascadeOnDelete(false);
 
             //OtheMember -> CovidStatus 1 - *
             modelbuilder.Entity<OtherMember>()
                 .HasMany(o => o.CovidStatuses)
-                .WithRequired(c => c.OtherMember)
+                .WithOptional(c => c.OtherMember)
                 .HasForeignKey(c => c.OtherMemberID)
                 .WillCascadeOnDelete(false);
         }

@@ -51,7 +51,14 @@ namespace VIS360.Controllers
             {
                 return Content((HttpStatusCode)600, "Invalid Model");
             }
-
+            else if (diseaseStatement.OtherMemberID == null && diseaseStatement.UserID == null)
+            {
+                return Content((HttpStatusCode)608, "userid and othermember id cant be both null");
+            }
+            else if (diseaseStatement.OtherMemberID == 0 || diseaseStatement.UserID == 0)
+            {
+                return Content((HttpStatusCode)608, "userid and othermember id cant be both null");
+            }
             var disease = await _user.AddDiseaseStatement(diseaseStatement);
             if (disease == HttpStatusCode.Accepted)
             {

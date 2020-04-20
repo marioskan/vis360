@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Serilog;
+using Serilog.Sinks.Slack;
 using VIS360.Core.Entities;
 using VIS360.Core.Interfaces;
 using VIS360.Core.ViewModels;
@@ -40,6 +42,10 @@ namespace VIS360.Controllers
             var result = await _user.RegisterUser(modelUser);
             if (result == HttpStatusCode.Accepted)
             {
+                var log = new LoggerConfiguration()
+                    .WriteTo.Slack("https://hooks.slack.com/services/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")
+                    .CreateLogger();
+                log.Information("User: "+modelUser.Email +" created");
                 return Content((HttpStatusCode)200, "User created successfully");
             }
             return Content((HttpStatusCode)203, "User register failed");
@@ -62,7 +68,11 @@ namespace VIS360.Controllers
             {
                 return Content((HttpStatusCode)202, "Wrong credentials or user doesn't exist.");
             }
-            return Content((HttpStatusCode)205, "User successfully logged in!");
+            var log = new LoggerConfiguration()
+                .WriteTo.Slack("https://hooks.slack.com/services/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")
+                .CreateLogger();
+            log.Information("User: " + userModel.Email + " logged in");
+            return Content((HttpStatusCode)200, "User successfully logged in!");
         }
 
         /// <summary>  
@@ -97,6 +107,10 @@ namespace VIS360.Controllers
             var basicinfo = await _user.AddUserBasicInfo(userModel);
             if (basicinfo == HttpStatusCode.Accepted)
             {
+                var log = new LoggerConfiguration()
+                    .WriteTo.Slack("https://hooks.slack.com/services/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")
+                    .CreateLogger();
+                log.Information("User: " + userModel.Email + " added basic info");
                 return Content((HttpStatusCode)207, "Added Basic Info successfully.");
             }
             return Content((HttpStatusCode)208, "Basic info add failed.");

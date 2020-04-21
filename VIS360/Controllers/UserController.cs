@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.Remoting.Messaging;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Serilog;
@@ -42,53 +43,25 @@ namespace VIS360.Controllers
             var result = await _user.RegisterUser(modelUser);
             if (result == HttpStatusCode.Accepted)
             {
-                var log = new LoggerConfiguration()
-                    .WriteTo.Slack("https://hooks.slack.com/services/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")
-                    .CreateLogger();
-                log.Information("User: "+modelUser.Email +" created");
+                //var log = new LoggerConfiguration()
+                //    .WriteTo.Slack("https://hooks.slack.com/services/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")
+                //    .CreateLogger();
+                //log.Information("User: "+modelUser.Email +" created");
                 return Content((HttpStatusCode)200, "User created successfully");
             }
             return Content((HttpStatusCode)203, "User register failed");
         }
 
-        /// <summary>  
-        /// Check user credentials Login  (User)
-        /// </summary>
-        [HttpPost]
-        [Route("Login")]
-        public async Task<IHttpActionResult> Login(User userModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return Content((HttpStatusCode)202, "Invalid Model");
-            }
 
-            var user = await _user.SearchUser(userModel);
-            if (user == null)
-            {
-                return Content((HttpStatusCode)202, "Wrong credentials or user doesn't exist.");
-            }
-            var log = new LoggerConfiguration()
-                .WriteTo.Slack("https://hooks.slack.com/services/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")
-                .CreateLogger();
-            log.Information("User: " + userModel.Email + " logged in");
-            return Content((HttpStatusCode)200, "User successfully logged in!");
-        }
 
-        /// <summary>  
-        /// Returns user object based on ID (int id)
-        /// </summary>
         [HttpGet]
         [Route("GetUser")]
-        public async Task<IHttpActionResult> GetUser(int id)
+        public async Task<IHttpActionResult> GetUser(string ud)
         {
-            var user = await  _user.ReturnUser(id);
+            var user = await _user.ReturnUser(ud);
             return Ok(user);
         }
 
-        /// <summary>  
-        /// Add basic info  (UserInfo)
-        /// </summary>
         [HttpPost]
         [Route("BasicInfo")]
         public async Task<IHttpActionResult> BasicInfo(UserInfo userModel)
@@ -98,7 +71,7 @@ namespace VIS360.Controllers
                 return Content((HttpStatusCode)202, "Invalid Model");
             }
 
-            var user = await _user.GetUserByEmail(userModel.Email);
+            var user = await _user.GetUserByID(userModel.UserID);
             if (user == null)
             {
                 return Content((HttpStatusCode)206, "No user exists with that email.");
@@ -106,40 +79,13 @@ namespace VIS360.Controllers
             userModel.User = user;
             var basicinfo = await _user.AddUserBasicInfo(userModel);
             if (basicinfo == HttpStatusCode.Accepted)
-            {
-                var log = new LoggerConfiguration()
-                    .WriteTo.Slack("https://hooks.slack.com/services/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")
-                    .CreateLogger();
-                log.Information("User: " + userModel.Email + " added basic info");
+            {               
                 return Content((HttpStatusCode)207, "Added Basic Info successfully.");
             }
             return Content((HttpStatusCode)208, "Basic info add failed.");
         }
 
-        /// <summary>  
-        /// Add demographic info  (Demographic, string email)
-        /// </summary>
-        //[HttpPost]
-        //[Route("DONOTUSE")]
-        //public async Task<IHttpActionResult> DemographicInfo(Demographic demographic,string email)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return Content((HttpStatusCode)202, "Invalid Model");
-        //    }
-        //    var user = await _user.GetUserByEmail(email);
-        //    if (user == null)
-        //    {
-        //        return Content((HttpStatusCode)209, "No user exists with that email.");
-        //    }
-        //    demographic.User = user;
-        //    var demo = await _user.AddDemographicInfo(demographic);
-        //    if (demo == HttpStatusCode.Accepted)
-        //    {
-        //        return Content((HttpStatusCode)210, "Added Demographic Info successfully.");
-        //    }
-        //    return Content((HttpStatusCode)211, "Demographic info add failed.");
-        //}
+        
 
         [HttpPost]
         [Route("AddOtherMember")]
@@ -158,14 +104,14 @@ namespace VIS360.Controllers
         }
 
         [HttpPost]
-        [Route("DemographicWithID")]
-        public async Task<IHttpActionResult> DemographicInfoWithID(DemographicIndustryRoomateVM demographic, int ID)
+        [Route("Demographic")]
+        public async Task<IHttpActionResult> DemographicInfo(DemographicIndustryRoomateVM demographic)
         {
             if (!ModelState.IsValid)
             {
                 return Content((HttpStatusCode)202, "Invalid Model");
             }
-            var user = await _user.ReturnUser(ID);
+            var user = await _user.ReturnUser(demographic.UserID);
             if (user == null)
             {
                 return Content((HttpStatusCode)212, "No user exists with that email.");
@@ -181,23 +127,16 @@ namespace VIS360.Controllers
             return Content((HttpStatusCode)214, "Demographic info add failed.");
         }
 
-        /// <summary>  
-        /// Returns user id only base on email  (string email)
-        /// </summary>
         [HttpGet]
-        [Route("UserID")]
-        public async Task<IHttpActionResult> GetUserID(string email)
+        [Route("GetMembers")]
+        public async Task<IHttpActionResult> GetMembers(string ID)
         {
-            if (email == null)
+            if (!ModelState.IsValid)
             {
-                return Content((HttpStatusCode)202, "Email cannot be empty");
+                return Content((HttpStatusCode)202, "Invalid Model");
             }
-            var user = await _user.GetUserByEmail(email);
-            if (user == null)
-            {
-                return Content((HttpStatusCode)214, "No user exists with that email.");
-            }
-            return Ok(user.ID);
+            var members = await _user.ReturnMembers(ID);
+            return Ok(members);
         }
     }
 }

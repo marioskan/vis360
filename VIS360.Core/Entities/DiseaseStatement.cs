@@ -9,7 +9,7 @@ namespace VIS360.Core.Entities
     public class DiseaseStatement 
     {
         public int ID { get; set; }
-        public int? UserID { get; set; }
+        public string UserID { get; set; }
         public int? OtherMemberID { get; set; }
 
         public bool Coronavirus { get; set; }

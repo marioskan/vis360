@@ -7,13 +7,13 @@ namespace VIS360.Infrastructure.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class disid2 : IMigrationMetadata
+    public sealed partial class TK : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(disid2));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(TK));
         
         string IMigrationMetadata.Id
         {
-            get { return "202004091425300_disid2"; }
+            get { return "202004211855151_TK"; }
         }
         
         string IMigrationMetadata.Source

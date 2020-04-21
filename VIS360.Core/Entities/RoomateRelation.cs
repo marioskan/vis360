@@ -10,7 +10,7 @@ namespace VIS360.Core.Entities
     public class RoomateRelation
     {
         public int ID { get; set; }
-        public int DemographicID { get; set; }
+        public string DemographicID { get; set; }
         public RoommateRelations RoomateRelatioships { get; set; }
 
         public virtual  Demographic Demographic { get; set; }

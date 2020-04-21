@@ -6,10 +6,10 @@
     <members>
         <member name="M:VIS360.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
             <summary>
-            Generates an URI-friendly ID for the <see cref="T:System.Web.Http.Description.ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"
+            Generates an URI-friendly Ud for the <see cref="T:System.Web.Http.Description.ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"
             </summary>
             <param name="description">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
-            <returns>The ID as a string.</returns>
+            <returns>The Ud as a string.</returns>
         </member>
         <member name="T:VIS360.Areas.HelpPage.HelpPageConfig">
             <summary>
@@ -164,7 +164,7 @@
             Gets the model that represents an API displayed on the help page. The model is initialized on the first call and cached for subsequent calls.
             </summary>
             <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
-            <param name="apiDescriptionId">The <see cref="T:System.Web.Http.Description.ApiDescription"/> ID.</param>
+            <param name="apiDescriptionId">The <see cref="T:System.Web.Http.Description.ApiDescription"/> Ud.</param>
             <returns>
             An <see cref="T:VIS360.Areas.HelpPage.Models.HelpPageApiModel"/>
             </returns>
@@ -506,16 +506,6 @@
             Register User  (User)
             </summary>
         </member>
-        <member name="M:VIS360.Controllers.UserController.Login(VIS360.Core.Entities.User)">
-            <summary>  
-            Check user credentials Login  (User)
-            </summary>
-        </member>
-        <member name="M:VIS360.Controllers.UserController.GetUser(System.Int32)">
-            <summary>  
-            Returns user object based on ID (int id)
-            </summary>
-        </member>
         <member name="M:VIS360.Controllers.UserController.BasicInfo(VIS360.Core.Entities.UserInfo)">
             <summary>  
             Add basic info  (UserInfo)
@@ -524,11 +514,6 @@
         <member name="M:VIS360.Controllers.UserController.AddOtherMember(VIS360.Core.Entities.OtherMember)">
             <summary>  
             Add demographic info  (Demographic, string email)
-            </summary>
-        </member>
-        <member name="M:VIS360.Controllers.UserController.GetUserID(System.String)">
-            <summary>  
-            Returns user id only base on email  (string email)
             </summary>
         </member>
     </members>

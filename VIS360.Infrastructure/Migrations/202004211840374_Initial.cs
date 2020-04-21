@@ -3,7 +3,7 @@ namespace VIS360.Infrastructure.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -24,8 +24,8 @@ namespace VIS360.Infrastructure.Migrations
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        UserID = c.Int(nullable: false),
-                        OtherMemberID = c.Int(nullable: false),
+                        UserID = c.String(maxLength: 128),
+                        OtherMemberID = c.Int(),
                         BloodPressure = c.Boolean(nullable: false),
                         Diabetes = c.Boolean(nullable: false),
                         Smoker = c.Boolean(nullable: false),
@@ -54,7 +54,7 @@ namespace VIS360.Infrastructure.Migrations
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        UserID = c.Int(nullable: false),
+                        UserID = c.String(nullable: false, maxLength: 128),
                         Name = c.String(),
                         Age = c.Int(nullable: false),
                         Gender = c.Int(nullable: false),
@@ -70,12 +70,12 @@ namespace VIS360.Infrastructure.Migrations
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        UserID = c.Int(nullable: false),
-                        OtherMemberID = c.Int(nullable: false),
+                        UserID = c.String(maxLength: 128),
+                        OtherMemberID = c.Int(),
                         Coronavirus = c.Boolean(nullable: false),
                         Diagnose = c.Int(nullable: false),
-                        DiagnoseDate = c.DateTime(nullable: false),
-                        HospitalAdmission = c.DateTime(nullable: false),
+                        DiagnoseDate = c.DateTime(nullable: false, storeType: "date"),
+                        HospitalAdmission = c.DateTime(nullable: false, storeType: "date"),
                         HospitalName = c.String(),
                     })
                 .PrimaryKey(t => t.ID)
@@ -88,17 +88,17 @@ namespace VIS360.Infrastructure.Migrations
                 "dbo.Users",
                 c => new
                     {
-                        ID = c.Int(nullable: false, identity: true),
+                        Ud = c.String(nullable: false, maxLength: 128),
                         Email = c.String(),
-                        Password = c.String(),
+                        Provider = c.String(),
                     })
-                .PrimaryKey(t => t.ID);
+                .PrimaryKey(t => t.Ud);
             
             CreateTable(
                 "dbo.Demographics",
                 c => new
                     {
-                        ID = c.Int(nullable: false),
+                        UserID = c.String(nullable: false, maxLength: 128),
                         City = c.String(),
                         Country = c.String(),
                         Education = c.Int(nullable: false),
@@ -109,16 +109,16 @@ namespace VIS360.Infrastructure.Migrations
                         Roommates = c.Int(nullable: false),
                         FinancialStatus = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Users", t => t.ID)
-                .Index(t => t.ID);
+                .PrimaryKey(t => t.UserID)
+                .ForeignKey("dbo.Users", t => t.UserID)
+                .Index(t => t.UserID);
             
             CreateTable(
                 "dbo.Industries",
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        DemographicID = c.Int(nullable: false),
+                        DemographicID = c.String(nullable: false, maxLength: 128),
                         Industries = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
@@ -130,7 +130,7 @@ namespace VIS360.Infrastructure.Migrations
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        DemographicID = c.Int(nullable: false),
+                        DemographicID = c.String(nullable: false, maxLength: 128),
                         RoomateRelatioships = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
@@ -141,22 +141,21 @@ namespace VIS360.Infrastructure.Migrations
                 "dbo.UserInfoes",
                 c => new
                     {
-                        ID = c.Int(nullable: false),
+                        UserID = c.String(nullable: false, maxLength: 128),
                         Name = c.String(),
                         Surname = c.String(),
-                        Email = c.String(),
                         PhoneNumber = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Users", t => t.ID)
-                .Index(t => t.ID);
+                .PrimaryKey(t => t.UserID)
+                .ForeignKey("dbo.Users", t => t.UserID)
+                .Index(t => t.UserID);
             
             CreateTable(
                 "dbo.HelpOffers",
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        UserID = c.Int(nullable: false),
+                        UserID = c.String(),
                         HelpType = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID);
@@ -166,7 +165,7 @@ namespace VIS360.Infrastructure.Migrations
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        UserID = c.Int(nullable: false),
+                        UserID = c.String(),
                         HelpType = c.Int(nullable: false),
                         VolunteerPush = c.Boolean(nullable: false),
                         TownPush = c.Boolean(nullable: false),
@@ -178,20 +177,20 @@ namespace VIS360.Infrastructure.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.DiseaseStatements", "OtherMemberID", "dbo.OtherMembers");
-            DropForeignKey("dbo.UserInfoes", "ID", "dbo.Users");
+            DropForeignKey("dbo.UserInfoes", "UserID", "dbo.Users");
             DropForeignKey("dbo.OtherMembers", "UserID", "dbo.Users");
             DropForeignKey("dbo.DiseaseStatements", "UserID", "dbo.Users");
-            DropForeignKey("dbo.Demographics", "ID", "dbo.Users");
+            DropForeignKey("dbo.Demographics", "UserID", "dbo.Users");
             DropForeignKey("dbo.RoomateRelations", "DemographicID", "dbo.Demographics");
             DropForeignKey("dbo.Industries", "DemographicID", "dbo.Demographics");
             DropForeignKey("dbo.CovidStatus", "UserID", "dbo.Users");
             DropForeignKey("dbo.CovidStatus", "OtherMemberID", "dbo.OtherMembers");
             DropForeignKey("dbo.HeartDiseases", "CovidStatusID", "dbo.CovidStatus");
             DropForeignKey("dbo.BreathingDiseases", "CovidStatusID", "dbo.CovidStatus");
-            DropIndex("dbo.UserInfoes", new[] { "ID" });
+            DropIndex("dbo.UserInfoes", new[] { "UserID" });
             DropIndex("dbo.RoomateRelations", new[] { "DemographicID" });
             DropIndex("dbo.Industries", new[] { "DemographicID" });
-            DropIndex("dbo.Demographics", new[] { "ID" });
+            DropIndex("dbo.Demographics", new[] { "UserID" });
             DropIndex("dbo.DiseaseStatements", new[] { "OtherMemberID" });
             DropIndex("dbo.DiseaseStatements", new[] { "UserID" });
             DropIndex("dbo.OtherMembers", new[] { "UserID" });

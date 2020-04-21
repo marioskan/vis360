@@ -12,9 +12,9 @@ namespace VIS360.Core.Interfaces
     public interface IUserService
     {
         Task<HttpStatusCode> RegisterUser(User user);
+        Task<User> GetUserByID(string userID);        
         Task<User> GetUserByEmail(string email);
-        Task<User> SearchUser(User userModel);
-        Task<User> ReturnUser(int ID);
+        Task<User> ReturnUser(string ID);
         Task<HttpStatusCode> AddUserBasicInfo(UserInfo info);
         Task<Demographic> AddDemographicInfo(DemographicIndustryRoomateVM demographic);
         Task<HttpStatusCode> AddVirusStatus(CovidStatus status);
@@ -24,5 +24,6 @@ namespace VIS360.Core.Interfaces
         Task<HttpStatusCode> AddOtherMember(OtherMember member);
         Task<HttpStatusCode> AddRelInd(List<RoomateRelation> relations, List<Industry> industries,Demographic demographic);
         Task<Demographic> ReturnDemo(User user);
+        Task<List<OtherMember>> ReturnMembers(string ID);
     }
 }

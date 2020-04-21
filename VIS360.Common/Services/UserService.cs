@@ -28,17 +28,13 @@ namespace VIS360.Common.Services
             return HttpStatusCode.Accepted;
         }
 
-        public async Task<User> GetUserByEmail(string email)
+        public async Task<User> GetUserByID(string userID)
         {
-            var user = await _context.Users.Where(u => u.Email == email).SingleOrDefaultAsync();
+            var user = await _context.Users.Where(u => u.Ud == userID).SingleOrDefaultAsync();
             return user;
         }
 
-        public async Task<User> SearchUser(User userModel)
-        {
-            var user = await _context.Users.Where(u => u.Email == userModel.Email && u.Password == userModel.Password).SingleOrDefaultAsync();
-            return user;
-        }
+        
 
         public async Task<HttpStatusCode> AddUserBasicInfo(UserInfo info)
         {
@@ -72,18 +68,18 @@ namespace VIS360.Common.Services
             return HttpStatusCode.Accepted;
         }
 
-        public async Task<User> ReturnUser(int ID)
+        public async Task<User> ReturnUser(string ID)
         {
-            //var user = await _context.Users.Where(u => u.ID == ID).SingleOrDefaultAsync();
+            //var user = await _context.Users.Where(u => u.Ud == Ud).SingleOrDefaultAsync();
             var user = await _context.Users.Include(k => k.CovidStatuses)
                 .Include(k=> k.Demographic.RoomateRelations)
                 .Include(k => k.Demographic.Industries)
                 .Include(k => k.OtherMembers)
                 .Include(k => k.CovidStatuses)
                 .Include(k => k.UserInfo)
-                .Include(m => m.DiseaseStatements).Where(u =>u.ID == ID)
+                .Include(m => m.DiseaseStatements).Where(u =>u.Ud == ID)
                 .SingleOrDefaultAsync();
-            //var covidstatuses = await _context.CovidStatuses.Where(u => u.UserID == ID).ToListAsync();
+            //var covidstatuses = await _context.CovidStatuses.Where(u => u.Ud == Ud).ToListAsync();
             //user.CovidStatuses = covidstatuses;
             return user;
         }
@@ -120,12 +116,12 @@ namespace VIS360.Common.Services
         {
             foreach (var rel in relations)
             {
-                rel.DemographicID = demographic.ID;
+                rel.DemographicID = demographic.UserID;
                 _context.RoomateRelations.Add(rel);
             }
             foreach (var ind in industries)
             {
-                ind.DemographicID = demographic.ID;
+                ind.DemographicID = demographic.UserID;
                 _context.Industries.Add(ind);
             }
             await _context.SaveChangesAsync();
@@ -136,6 +132,18 @@ namespace VIS360.Common.Services
         {
             var demo = await _context.Demographics.Where(u => u.User == user).SingleOrDefaultAsync();
             return demo;
+        }
+
+        public async Task<User> GetUserByEmail(string email)
+        {
+            var user = await _context.Users.Where(u => u.Email == email).SingleOrDefaultAsync();
+            return user;
+        }
+
+        public async Task<List<OtherMember>> ReturnMembers(string ID)
+        {
+            var members = await _context.OtherMembers.Where(o => o.UserID == ID).ToListAsync();
+            return members;
         }
     }
 }

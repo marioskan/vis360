@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace VIS360.Infrastructure
         {
 
         }
-        
+
         public DbSet<User> Users { get; set; }
         public DbSet<UserInfo> UserInfos { get; set; }
         public DbSet<Demographic> Demographics { get; set; }
@@ -35,6 +36,7 @@ namespace VIS360.Infrastructure
 
         protected override void OnModelCreating(DbModelBuilder modelbuilder)
         {
+            
             //User -> UserInfo 1-0 or 1-1
             modelbuilder.Entity<User>()
                 .HasOptional(u => u.UserInfo)
@@ -78,7 +80,7 @@ namespace VIS360.Infrastructure
             modelbuilder.Entity<Demographic>()
                 .HasMany(d => d.Industries)
                 .WithRequired(i => i.Demographic)
-                .HasForeignKey(i =>  i.DemographicID)
+                .HasForeignKey(i => i.DemographicID)
                 .WillCascadeOnDelete(true);
 
             ////CovidStatus -> OtherMember 1-1
@@ -119,5 +121,18 @@ namespace VIS360.Infrastructure
                 .HasForeignKey(c => c.OtherMemberID)
                 .WillCascadeOnDelete(false);
         }
+
+
     }
+
+    //public class Identity : Context
+    //{
+    //    protected override void OnModelCreating(DbModelBuilder modelbuilder)
+    //    {
+    //        modelbuilder.Entity<User>()
+    //            .Property(u => u.Ud)
+    //            .HasDatabaseGeneratedOption(null);
+    //        base.OnModelCreating(modelbuilder);
+    //    }
+    //}
 }

@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.WebPages;
 using VIS360.Core.Entities;
 using VIS360.Core.Interfaces;
 
@@ -55,7 +56,7 @@ namespace VIS360.Controllers
             {
                 return Content((HttpStatusCode)608, "userid and othermember id cant be both null");
             }
-            else if (diseaseStatement.OtherMemberID == 0 || diseaseStatement.UserID == 0)
+            else if (diseaseStatement.OtherMemberID == 0 || diseaseStatement.UserID.IsEmpty())
             {
                 return Content((HttpStatusCode)608, "userid and othermember id cant be both null");
             }

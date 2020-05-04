@@ -143,6 +143,13 @@ namespace VIS360.Common.Services
         public async Task<List<OtherMember>> ReturnMembers(string ID)
         {
             var members = await _context.OtherMembers.Where(o => o.UserID == ID).ToListAsync();
+            if (members.Count != 0)
+            {
+                foreach (var mem in members)
+                {
+                    
+                }
+            }
             return members;
         }
     }

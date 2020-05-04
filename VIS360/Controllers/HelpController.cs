@@ -29,15 +29,15 @@ namespace VIS360.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Content((HttpStatusCode)600, "Invalid Model");
+                return Content((HttpStatusCode)202, "Invalid Model");
             }
 
             var _help = await _user.AddHelp(help);
             if (_help == HttpStatusCode.Accepted)
             {
-                return Content((HttpStatusCode)608, "Added Help successfully");
+                return Content((HttpStatusCode)200, "Added Help successfully");
             }
-            return Content((HttpStatusCode)606, "Help add failed");
+            return Content((HttpStatusCode)201, "Help add failed");
         }
 
         /// <summary>  
@@ -49,15 +49,15 @@ namespace VIS360.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Content((HttpStatusCode)600, "Invalid Model");
+                return Content((HttpStatusCode)202, "Invalid Model");
             }
 
             var _help = await _user.AddHelpOffer(helpOffer);
             if (_help == HttpStatusCode.Accepted)
             {
-                return Content((HttpStatusCode)608, "Added Help offer successfully");
+                return Content((HttpStatusCode)200, "Added Help offer successfully");
             }
-            return Content((HttpStatusCode)606, "Help offer add failed");
+            return Content((HttpStatusCode)201, "Help offer add failed");
         }
     }
 }

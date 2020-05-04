@@ -30,15 +30,19 @@ namespace VIS360.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Content((HttpStatusCode)600, "Invalid Model");
+                return Content((HttpStatusCode)201, "Invalid Model");
             }
 
+            if (status.UserID == null)
+            {
+                return Content((HttpStatusCode)201, "Invalid Model");
+            }
             var covidStatus = await _user.AddVirusStatus(status);
             if (covidStatus == HttpStatusCode.Accepted)
             {
-                return Content((HttpStatusCode)608, "Added Covid Status successfully");
+                return Content((HttpStatusCode)200, "Added Covid Status successfully");
             }
-            return Content((HttpStatusCode)606, "Covid Status add failed");
+            return Content((HttpStatusCode)202, "Covid Status add failed");
         }
 
         /// <summary>  
@@ -50,22 +54,22 @@ namespace VIS360.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Content((HttpStatusCode)600, "Invalid Model");
+                return Content((HttpStatusCode)202, "Invalid Model");
             }
             else if (diseaseStatement.OtherMemberID == null && diseaseStatement.UserID == null)
             {
-                return Content((HttpStatusCode)608, "userid and othermember id cant be both null");
+                return Content((HttpStatusCode)201, "userid and othermember id cant be both null");
             }
             else if (diseaseStatement.OtherMemberID == 0 || diseaseStatement.UserID.IsEmpty())
             {
-                return Content((HttpStatusCode)608, "userid and othermember id cant be both null");
+                return Content((HttpStatusCode)201, "userid and othermember id cant be both null");
             }
             var disease = await _user.AddDiseaseStatement(diseaseStatement);
             if (disease == HttpStatusCode.Accepted)
             {
-                return Content((HttpStatusCode)608, "Added Disease Statement successfully");
+                return Content((HttpStatusCode)200, "Added Disease Statement successfully");
             }
-            return Content((HttpStatusCode)606, "Disease Statement add failed");
+            return Content((HttpStatusCode)201, "Disease Statement add failed");
         }
     }
 }

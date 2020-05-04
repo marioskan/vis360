@@ -74,15 +74,15 @@ namespace VIS360.Controllers
             var user = await _user.GetUserByID(userModel.UserID);
             if (user == null)
             {
-                return Content((HttpStatusCode)206, "No user exists with that email.");
+                return Content((HttpStatusCode)201, "No user exists with that email.");
             }
             userModel.User = user;
             var basicinfo = await _user.AddUserBasicInfo(userModel);
             if (basicinfo == HttpStatusCode.Accepted)
             {               
-                return Content((HttpStatusCode)207, "Added Basic Info successfully.");
+                return Content((HttpStatusCode)200, "Added Basic Info successfully.");
             }
-            return Content((HttpStatusCode)208, "Basic info add failed.");
+            return Content((HttpStatusCode)201, "Basic info add failed.");
         }
 
         
@@ -98,9 +98,9 @@ namespace VIS360.Controllers
             var result = await _user.AddOtherMember(member);
             if (result == HttpStatusCode.Accepted)
             {
-                return Content((HttpStatusCode)209, "successfully");
+                return Content((HttpStatusCode)200, "successfully");
             }
-            return Content((HttpStatusCode)211, "Member add failed.");
+            return Content((HttpStatusCode)201, "Member add failed.");
         }
 
         [HttpPost]
@@ -114,7 +114,7 @@ namespace VIS360.Controllers
             var user = await _user.ReturnUser(demographic.UserID);
             if (user == null)
             {
-                return Content((HttpStatusCode)212, "No user exists with that email.");
+                return Content((HttpStatusCode)201, "No user exists with that email.");
             }
             demographic.User = user;
             var demo = await _user.AddDemographicInfo(demographic);
@@ -122,9 +122,9 @@ namespace VIS360.Controllers
             var demoMore = await _user.AddRelInd(demographic.RoomateRelations, demographic.Industries,demo);
             if (demoMore == HttpStatusCode.Accepted)
             {
-                return Content((HttpStatusCode)213, "Added Demographic Info successfully.");
+                return Content((HttpStatusCode)200, "Added Demographic Info successfully.");
             }
-            return Content((HttpStatusCode)214, "Demographic info add failed.");
+            return Content((HttpStatusCode)201, "Demographic info add failed.");
         }
 
         [HttpGet]
